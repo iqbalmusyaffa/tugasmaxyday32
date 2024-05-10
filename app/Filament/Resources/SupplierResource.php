@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ProductResource\Pages;
-use App\Filament\Resources\ProductResource\RelationManagers;
-use App\Models\Product;
+use App\Filament\Resources\SupplierResource\Pages;
+use App\Filament\Resources\SupplierResource\RelationManagers;
+use App\Models\Supplier;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,15 +12,13 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Hidden;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Facades\Auth;
-use Filament\Tables\ColumnValue;
-class ProductResource extends Resource
+use Filament\Forms\Components\Hidden;
+class SupplierResource extends Resource
 {
-    protected static ?string $model = Product::class;
+    protected static ?string $model = Supplier::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -29,9 +27,9 @@ class ProductResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')->label('Name'),
-                Textarea::make('description')->label('Description')->nullable(),
-                TextInput::make('price')->label('Price')->numeric(),
-            Hidden::make('user_id')->dehydrateStateUsing(fn($state)=>Auth::id()),
+                TextInput::make('email')->label('Email'),
+                TextInput::make('phone')->label('Phone'),
+                Hidden::make('user_id')->dehydrateStateUsing(fn($state)=>Auth::id()),
             ]);
     }
 
@@ -39,11 +37,11 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('rowIndex')->label('No.'),
+                TextColumn::make('no')->rowIndex(),
                 TextColumn::make('name')->label('Name'),
-                TextColumn::make('description')->label('Description'),
-                TextColumn::make('price')
-                ])
+                TextColumn::make('email')->label('Email'),
+                TextColumn::make('phone')->label('Phone'),
+            ])
             ->filters([
                 //
             ])
@@ -67,9 +65,9 @@ class ProductResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListProducts::route('/'),
-            'create' => Pages\CreateProduct::route('/create'),
-            'edit' => Pages\EditProduct::route('/{record}/edit'),
+            'index' => Pages\ListSuppliers::route('/'),
+            'create' => Pages\CreateSupplier::route('/create'),
+            'edit' => Pages\EditSupplier::route('/{record}/edit'),
         ];
     }
 }
