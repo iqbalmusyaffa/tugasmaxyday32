@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\StockResource\Pages;
 use App\Filament\Resources\StockResource\RelationManagers;
 use App\Models\Stock;
+use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,7 +13,11 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Hidden;
+use Illuminate\Support\Facades\Auth;
+use Filament\Tables\Columns\TextColumn;
 class StockResource extends Resource
 {
     protected static ?string $model = Stock::class;
@@ -23,7 +28,13 @@ class StockResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Select::make('product_id')
+                    ->label('Product')
+                    ->options(Product::all()->pluck('name', 'id')->toArray())
+                    ->required(),
+                TextInput::make('quantity')->label('quantity')->numeric(),
+                Hidden::make('user_id')->dehydrateStateUsing(fn($state)=>Auth::id()),
+
             ]);
     }
 
@@ -31,7 +42,9 @@ class StockResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('No')->rowIndex(),
+                TextColumn::make('product.name')->label('Product'),
+                TextColumn::make('quantity')->label('Quantity'),
             ])
             ->filters([
                 //

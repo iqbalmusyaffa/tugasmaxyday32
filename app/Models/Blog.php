@@ -11,7 +11,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Support\Str;
 
 
-class Blog extends Model
+class Blog extends Model implements HasMedia
 {
     use HasFactory;
     use SoftDeletes;

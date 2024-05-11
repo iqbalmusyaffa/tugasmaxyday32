@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 
 class BlogResource extends Resource
 {
@@ -59,7 +60,8 @@ class BlogResource extends Resource
                 TextColumn::make('No')->rowIndex(),
                 TextColumn::make('post_title')->label('judul'),
                 TextColumn::make('post_slug')->label('slug'),
-                TextColumn::make('categories.title')->label('kategori'),
+                SpatieMediaLibraryImageColumn::make('image'),
+                TextColumn::make('kategoris.title')->label('kategori'),
                 CheckboxColumn::make('is_published')->label('public')
             ])
             ->filters([
