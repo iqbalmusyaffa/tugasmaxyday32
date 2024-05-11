@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('category_id');
-            $table->string('title');
+            $table->string('post_title');
             $table->text('content');
-            // Define foreign key constraint
-            $table->foreign('category_id')->references('id')->on('kategoriblogs')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('kategoris_id');
+            $table->foreign('kategoris_id')->references('id')->on('kategoriblogs')->nullable();
+            $table->string("meta_description")->nullable();
+            $table->boolean("is_featured")->default(0);
+            $table->string('post_slug')->unique();
+            $table->boolean("is_published");
+            $table->foreignId("user_id")->constrained()->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });

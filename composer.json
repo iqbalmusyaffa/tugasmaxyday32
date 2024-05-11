@@ -8,7 +8,9 @@
         "php": "^8.2",
         "filament/filament": "3.2.57",
         "filament/forms": "3.2.57",
+        "filament/spatie-laravel-media-library-plugin": "3.2.57.0",
         "filament/tables": "3.2.57",
+        "joshembling/image-optimizer": "^1.4",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9"
     },

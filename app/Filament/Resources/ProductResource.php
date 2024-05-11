@@ -39,7 +39,7 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('rowIndex')->label('No.'),
+                TextColumn::make('no')->rowIndex(),
                 TextColumn::make('name')->label('Name'),
                 TextColumn::make('description')->label('Description'),
                 TextColumn::make('price')

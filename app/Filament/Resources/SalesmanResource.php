@@ -12,6 +12,10 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\Hidden;
 
 class SalesmanResource extends Resource
 {
@@ -23,7 +27,10 @@ class SalesmanResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')->label('Name'),
+                TextInput::make('email')->label('Email'),
+                TextInput::make('phone')->label('Phone'),
+                Hidden::make('user_id')->dehydrateStateUsing(fn($state)=>Auth::id()),
             ]);
     }
 
@@ -31,7 +38,10 @@ class SalesmanResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('no')->rowIndex(),
+                TextColumn::make('name')->label('Name'),
+                TextColumn::make('email')->label('Email'),
+                TextColumn::make('phone')->label('Phone'),
             ])
             ->filters([
                 //
